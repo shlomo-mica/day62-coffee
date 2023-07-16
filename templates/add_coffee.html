@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form,render_nav_item,render_form_row %}
+{% import "bootstrap/form.html" as wtf %}
+<!--Don't forget your import here-->
+wtf.render_form()
+{% block styles %}
+{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+{% block title %}Add A New Cafe{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8">
+
+      <h1>Add a new cafe into the database</h1>
+
+
+      <!-- This is where your WTForm will go -->
+        <form method="post">
+            {{ form.csrf_token() }}
+            {{ render_form_row([form.cafe_name]) }}
+            {{ render_form_row([form.location_url]) }}
+            {{ render_form_row([form.open_time]) }}
+            {{ render_form_row([form.close_time]) }}
+            {{ render_form_row([form.coffee_rate], col_map={form.open_time_label: 'col-md-2'}) }}
+
+            {# Custom col which should use class col-md-2, and the others the defaults: #}
+            {{ render_form_row([form.wifi_strength_rating], col_map={form.open_time_label: 'col-md-2'}) }}
+            {{ render_form_row([form.power_socket], col_map={form.open_time_label: 'col-md-2'}) }}
+
+            {{ render_form_row([form.update_your_coffee]) }}
+             <p><a href="{{ url_for('cafes') }}">Return to index page</a></p>
+
+            {# Custom col which should use class col-md-2 and modified col class for the default of the other fields: #}
+        </form>
+	  <p class="space-above"><a href="#">See all cafes</a></p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
